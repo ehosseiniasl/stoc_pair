@@ -90,7 +90,9 @@ def _split_train_val(trainset, val_fraction=0, nsamples=-1):
     if nsamples>-1:
         n_train, n_val = int(nsamples), len(trainset)-int(nsamples) 
     else:    
-        n_train, n_val = int((1. - val_fraction) * len(trainset)), int(val_fraction * len(trainset))
+        #n_train, n_val = int((1. - val_fraction) * len(trainset)), int(val_fraction * len(trainset))
+        n_train = int((1. - val_fraction) * len(trainset))
+        n_val = len(trainset) - n_train
     train_subset, val_subset = torch.utils.data.random_split(trainset, (n_train, n_val))
     return train_subset, val_subset
 

@@ -31,6 +31,7 @@ import glob
 import tqdm
 import torch.utils.data as utils
 import json
+from data_list import ImageList
 
 parser = argparse.ArgumentParser(description='Stochastic Pairing')
 
@@ -261,6 +262,145 @@ elif args.dataset=='cifar10':
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
     nb_classes = len(classes)
     dim_inp = 32*32*3
+elif args.dataset == 'amazon_31':
+    transform_train = transforms.Compose([
+        # transforms.RandomCrop(32, padding=4),
+        transforms.Resize(128),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    transform_test = transforms.Compose([
+        transforms.ToTensor(),
+    ])
+    fulltrainset = ImageList(open('./datasets/office/amazon_31_list.txt').readlines(),
+                         transform=transform_train)
+    train_set, valset = _split_train_val(fulltrainset, val_fraction=0.1)
+    testset = valset
+
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=args.mbs, shuffle=True,
+                                              num_workers=0, pin_memory=True)
+    validloader = torch.utils.data.DataLoader(valset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    nb_classes = 31
+    dim_inp = 32 * 32 * 3
+elif args.dataset == 'amazon_10':
+    transform_train = transforms.Compose([
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    transform_test = transforms.Compose([
+        transforms.ToTensor(),
+    ])
+    fulltrainset = ImageList(open('./datasets/office/amazon_10_list.txt').readlines(),
+                         transform=transform_train)
+    train_set, valset = _split_train_val(fulltrainset, val_fraction=0.1)
+    testset = valset
+
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=args.mbs, shuffle=True,
+                                              num_workers=0, pin_memory=True)
+    validloader = torch.utils.data.DataLoader(valset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    nb_classes = 10
+    dim_inp = 32 * 32 * 3
+elif args.dataset == 'webcam_31':
+    transform_train = transforms.Compose([
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    transform_test = transforms.Compose([
+        transforms.ToTensor(),
+    ])
+    fulltrainset = ImageList(open('./datasets/office/webcam_31_list.txt').readlines(),
+                         transform=transform_train)
+    train_set, valset = _split_train_val(fulltrainset, val_fraction=0.1)
+    testset = valset
+
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=args.mbs, shuffle=True,
+                                              num_workers=0, pin_memory=True)
+    validloader = torch.utils.data.DataLoader(valset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    nb_classes = 31
+    dim_inp = 32 * 32 * 3
+elif args.dataset == 'webcam_10':
+    transform_train = transforms.Compose([
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    transform_test = transforms.Compose([
+        transforms.ToTensor(),
+    ])
+    fulltrainset = ImageList(open('./datasets/office/webcam_10_list.txt').readlines(),
+                         transform=transform_train)
+    train_set, valset = _split_train_val(fulltrainset, val_fraction=0.1)
+    testset = valset
+
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=args.mbs, shuffle=True,
+                                              num_workers=0, pin_memory=True)
+    validloader = torch.utils.data.DataLoader(valset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    nb_classes = 10
+    dim_inp = 32 * 32 * 3
+elif args.dataset == 'dslr_31':
+    transform_train = transforms.Compose([
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    transform_test = transforms.Compose([
+        transforms.ToTensor(),
+    ])
+    fulltrainset = ImageList(open('./datasets/office/dslr_31_list.txt').readlines(),
+                         transform=transform_train)
+    train_set, valset = _split_train_val(fulltrainset, val_fraction=0.1)
+    testset = valset
+
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=args.mbs, shuffle=True,
+                                              num_workers=0, pin_memory=True)
+    validloader = torch.utils.data.DataLoader(valset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    nb_classes = 31
+    dim_inp = 32 * 32 * 3
+elif args.dataset == 'dslr_10':
+    transform_train = transforms.Compose([
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    transform_test = transforms.Compose([
+        transforms.ToTensor(),
+    ])
+    fulltrainset = ImageList(open('./datasets/office/dslr_10_list.txt').readlines(),
+                         transform=transform_train)
+    train_set, valset = _split_train_val(fulltrainset, val_fraction=0.1)
+    testset = valset
+
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=args.mbs, shuffle=True,
+                                              num_workers=0, pin_memory=True)
+    validloader = torch.utils.data.DataLoader(valset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.mbs, shuffle=False,
+                                              num_workers=0, pin_memory=True)
+    nb_classes = 10
+    dim_inp = 32 * 32 * 3
 ###############################################################################
 # Build the model
 ###############################################################################
